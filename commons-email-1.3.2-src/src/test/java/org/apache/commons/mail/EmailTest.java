@@ -197,3 +197,19 @@ public class EmailTest {
 		email.setHostName(null);
 		email.getMailSession();
 	}
+
+  //Now to test the method getSentDate - see below!
+	@Test
+	public void getSentDate()
+	{
+		Date sentDate = new Date(160721);
+		email.setSentDate(sentDate);
+		assertEquals(sentDate, email.getSentDate());
+	}
+
+	@Test
+	public void getSentDateNull()
+	{
+		java.util.Date date = new java.util.Date();
+		assertEquals (date, email.getSentDate());
+	}
