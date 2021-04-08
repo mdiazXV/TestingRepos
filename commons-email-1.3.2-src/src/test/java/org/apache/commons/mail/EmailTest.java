@@ -150,3 +150,30 @@ public class EmailTest {
      	email.addReplyTo("testReply@squareEnix.com");
      	email.buildMimeMessage();
 	}
+
+  //The following code tests getHostName!
+		@Test
+		public void testGetHostName()
+		{
+			email.setHostName("royal host"); //super creative host name
+			String hostname = email.getHostName();
+			assertEquals("royal host", hostname);
+		}
+
+		@Test
+		public void testGetHostNameEmpty()
+		{
+			email.setHostName(null);
+			String hostname = email.getHostName();
+			assertEquals(null, hostname);
+		}
+
+		@Test()
+		public void testGetHostNameSession()
+		{
+			Properties prop = new Properties();
+			Session session = Session.getDefaultInstance(prop, null);
+			prop.put(EmailConstants.MAIL_HOST, "Insomnia.host");
+			email.setMailSession(session);
+			assertEquals("Insomnia.host", email.getHostName());
+		}
