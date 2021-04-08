@@ -30,3 +30,18 @@ public class EmailTest {
 	{
 		//this is a tearDown! :D
 	}
+
+  //The following code tests addBcc
+  	@Test
+  	public void testAddBcc() throws Exception
+  	{
+  		email.addBcc(TEST_EMAILS);
+  		assertEquals(3, email.getBccAddresses().size());
+  	}
+
+  	@Test(expected = EmailException.class)
+  	public void testAddBccEmpty() throws Exception
+  	{
+  		email.addBcc(Empty_Emails);
+  		assertEquals(0, email.getBccAddresses().size());
+  	}
