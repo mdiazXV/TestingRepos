@@ -177,3 +177,23 @@ public class EmailTest {
 			email.setMailSession(session);
 			assertEquals("Insomnia.host", email.getHostName());
 		}
+
+    //time to test getMailSession!
+	@Test
+	public void testGetMailSession() throws EmailException
+	{
+		email.setHostName("TestingHost");
+		email.setAuthentication("username", "password");
+		email.setBounceAddress("bouncedEmail@squareEnix.com");
+		email.setSSLOnConnect(true);
+		email.setStartTLSEnabled(true);
+		email.setSSLCheckServerIdentity(true);
+		email.getMailSession();
+	}
+
+	@Test(expected = EmailException.class)
+	public void testGetMailSessionEmptyHost() throws EmailException
+	{
+		email.setHostName(null);
+		email.getMailSession();
+	}
