@@ -213,3 +213,12 @@ public class EmailTest {
 		java.util.Date date = new java.util.Date();
 		assertEquals (date, email.getSentDate());
 	}
+
+  //Time to test the method getSocketConnectionTimeOut
+	@Test
+	public void testGetSocketConnectionTimeOut()
+	{
+		int time = 30; //30 seconds - reasonable time to wait to time out in real life
+		email.setSocketConnectionTimeout(time);
+		assertEquals(time, email.getSocketConnectionTimeout());
+	}
