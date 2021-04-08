@@ -83,10 +83,70 @@ public class EmailTest {
 		assertEquals(0, email.getHeaders().size());
 	}
 
-  //The follow code tests the method addReplyTo!
+  //The following code tests the method addReplyTo!
 	@Test
 	public void testAddReplyTo() throws Exception
 	{
 		email.addReplyTo(TEST_EMAILS[1], Test_Names[2]);
 		assertEquals(1, email.getReplyToAddresses().size());
+	}
+
+  //Below tests the method buildMimeMessage!
+	@Test
+	public void testBuildMimeMessage() throws EmailException
+	{
+		email.setHostName("royal host");
+		email.setSmtpPort(1234);
+		email.setFrom("finalFantasy@squareEnix.com");
+		email.addTo("squareEnix@finalFantasy.org");
+		email.setSubject("Testing");
+     	email.setContent("Testing Content", "text/plain");
+     	email.addCc("testCC@squareEnix.com");
+     	email.addBcc("testBcc@finalFantasy.org");
+     	email.addHeader("testingHeader", "Scientia");
+     	email.addReplyTo("testReply@squareEnix.com");
+		email.buildMimeMessage();
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void testBuildMimeMessageException() throws EmailException
+	{
+		Properties prop = new Properties();
+		Session session = Session.getDefaultInstance(prop,null);
+		prop.put(EmailConstants.MAIL_HOST, "Insomnia.host");
+		email.setHostName("royal host");
+	    email.message=email.createMimeMessage(session);
+		email.buildMimeMessage();
+	}
+
+	@Test
+	public void testBuildMimeMessageNullContent() throws EmailException
+	{
+		email.setHostName("royal host");
+		email.setSmtpPort(1234);
+		email.setFrom("finalFantasy@squareEnix.com");
+		email.addTo("squareEnix@finalFantasy.org");
+		email.setSubject("Testing");
+     	email.setContent(null);
+     	email.buildMimeMessage();
+	}
+
+	@Test(expected=EmailException.class)
+	public void testBuildMimeMessageNull() throws EmailException
+	{
+		email.setHostName("royal host");
+     	email.buildMimeMessage();
+	}
+
+	@Test(expected=EmailException.class)
+	public void testBuildMimeMessage2() throws EmailException
+	{
+		email.setHostName("royal host");
+ 		email.setSmtpPort(1234);
+		email.setFrom("finalFantasy@squareEnix.com");
+		email.setSubject("This is a Test Email!");
+     	email.setContent("Testing Content", "text/plain");
+     	email.addHeader("TestingHeader", "Argentum");
+     	email.addReplyTo("testReply@squareEnix.com");
+     	email.buildMimeMessage();
 	}
